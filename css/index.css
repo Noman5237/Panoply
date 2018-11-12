@@ -1,0 +1,51 @@
+body {
+    background-color: #221F42;
+    horiz-align: center;
+}
+
+iframe {
+    width: 100%;
+    height: 250px;
+    margin: -2px;
+}
+
+#editorName {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#softkeys {
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+height: 30px;
+background: #dadada;
+padding-left: 5px;
+padding-right: 5px;
+}
+
+#softkeys > * {
+display: inline-block;
+width: 72px;
+font-weight: 400;
+color: #323232;
+}
+
+#softkey-left {
+text-align: left;
+font-size: 14px;
+}
+
+#softkey-right {
+text-align: right;
+font-size: 14px;
+}
+
+#softkey-center {
+width: 76px;
+font-size: 16px;
+font-weight: 600;
+text-align: center;
+}
+

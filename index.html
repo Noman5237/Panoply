@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+        
+        <title>Panoply</title>
+        
+        <!-- Inline scripts are forbidden in Firefox OS apps (CSP restrictions),
+             so we use a script file. -->
+        <script src="app.js" defer></script>
+        <link rel="stylesheet" href="css/index.css" type="text/css">
+    
+    </head>
+    
+    <body style="align-content: center;">
+        <section id="title">
+            <h4 id="editorName" style="color: white;" align="center">File Name</h4>
+        </section>
+        <section id="app">
+            <iframe src="./html/CodeEditor/editor.html" frameborder="5" id="editorFrame"></iframe>
+        </section>
+        <footer id="softkeys">
+            <div id="softkey-left">TAB</div>
+            <div id="softkey-center">ENTER</div>
+            <div id="softkey-right">RUN</div>
+        </footer>
+    </body>
+
+</html>
