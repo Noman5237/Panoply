@@ -1,3 +1,5 @@
+let mainOutput = '';
+
 window.addEventListener('DOMContentLoaded', function () {
     
     // src code
@@ -22,6 +24,14 @@ window.addEventListener('DOMContentLoaded', function () {
                 e.preventDefault();
                 
                 console.log('Tab Hit');
+                break;
+            case 'Enter':
+                // todo handle the compile and run
+                console.log('Code Compiling Started');
+                
+                mainOutput += interpret(src.value);
+                console.log('Code Compiling Ended');
+                console.log(mainOutput);
                 break;
         }
     });
