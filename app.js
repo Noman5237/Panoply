@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 
                 output.log('Tab Hit');
                 break;
-            case 'SoftRight':
+            case 'Enter':
                 if (editorOnFocus) {
                     output.focus();
                     editorOnFocus = !editorOnFocus;

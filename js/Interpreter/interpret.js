@@ -61,12 +61,16 @@ function parse(tokensArray) {
         console.log(`token: ${token}`);
         
         // check if the token is a real number
-        if (!isNaN(token)) {
+        if (typeof token === 'number') {
             
             console.log('Number hit');
             stackHit = true;
             
             tokensArray[i] = Number(token);
+        } else if (typeof token === 'string') {
+            console.log('String Hit');
+            stackHit = true;
+            tokensArray[i] = token.toString();
         } else {
             
             // it can be a function
