@@ -9,6 +9,10 @@ let modules = {
     'base': base
 };
 
+let func ={
+
+};
+
 // current modules in scope
 let modulesInScope = {
     'base': modules['base']

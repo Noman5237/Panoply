@@ -17,7 +17,7 @@ function interpret(code) {
     
     for (let tokensArray in tokensArrays) {
         // noinspection JSUnfilteredForInLoop
-        output += parse(tokensArrays[tokensArray]) + '\n';
+        output += parse(tokensArrays[tokensArray]) + '&#010;';
     }
     
     return output;
@@ -41,7 +41,7 @@ function generateTokens(code) {
     
     // new function filter - a good one
     code = code.filter(nonEmptyString);
-    let tokensArrays = [];  // fixme handle for single statement
+    let tokensArrays = [];
     for (let i = 0; i < code.length; i++) {
         tokensArrays[i] = code[i].split(' ');
     }
@@ -51,7 +51,7 @@ function generateTokens(code) {
 }
 
 function parse(tokensArray) {
-    let stackHit = false;
+    let stackHit = false;           // fixme there should be no stack hit variable once func syntax is parsed
     for (let i = tokensArray.length - 1; i >= 0; i--, stackHit = false) {
         
         console.log(`Current Index: ${i}`);
@@ -68,67 +68,66 @@ function parse(tokensArray) {
             
             tokensArray[i] = Number(token);
         } else {
+            
+            // it can be a function
+            for (let module in modulesInScope) {
+                let func = modulesInScope[module][token];
+                if (func != null) {
+                    
+                    console.log(`Func Hit: ${func}`);
+                    stackHit = true;
+                    
+                    // its a function call
+                    let funcCallArgs = tokensArray.slice(i + 1, i + 1 + func.argsNeed);   // func args
+                    console.table(funcCallArgs);
+                    let parsedValue = func.call(funcCallArgs);                   // return value after func call
+                    console.log("Parsed Value: " + parsedValue.toString());
+                    tokensArray = unify(tokensArray, i, parsedValue, func.argsNeed);
+                    // carry on
+                    break;
+                }
+                
+            }
+            
+            // if there was a hit then continue
+            if (stackHit) continue;
+            
+            // after not being a function
+            // it must be a new var with str just in front of it
+            // so look ahead for str
+            if (tokensArray[i - 1] === 'str') {
+                
+                console.log(`Hit Str`);
+                i--;
+                
+                let func = modulesInScope['base']['str'];
+                let funcCallArgs = tokensArray.slice(i + 1, i + 1 + func.argsNeed);
+                let parsedValue = func.call(funcCallArgs);
+                console.log("Parsed Value: " + parsedValue.toString());
+                tokensArray = unify(tokensArray, i, parsedValue, func.argsNeed);
+                
+                console.table(variables);
+            }
             // its a variable or a function
             // checking in variables stack
-            if (variables[token] != null) {
+            else if (variables[token] != null) {
                 // its a variable hit
                 // parse it into a number,
                 // because variables cannot store anything
                 // except numbers
                 
                 console.log('Variable Hit');
-                
+                stackHit = true;
                 tokensArray[i] = Number(variables[token]);
-            } else {
-                
-                // it can be a function
-                for (let module in modulesInScope) {
-                    let func = modulesInScope[module][token];
-                    if (func != null) {
-                        
-                        console.log(`Func Hit: ${func}`);
-                        stackHit = true;
-                        
-                        // its a function call
-                        let funcCallArgs = tokensArray.slice(i + 1, i + 1 + func.argsNeed);   // func args
-                        console.table(funcCallArgs);
-                        let parsedValue = func.call(funcCallArgs);                   // return value after func call
-                        console.log("Parsed Value: " + parsedValue.toString());
-                        tokensArray = unify(tokensArray, i,  parsedValue, func.argsNeed);
-                        // carry on
-                        break;
-                    }
-                    
-                }
-                
-                // if there was a hit then continue
-                if (stackHit) continue;
-                
-                // after not being a function
-                // it must be a new var with str just in front of it
-                // so look ahead for str
-                if (tokensArray[i - 1] === 'str') {
-    
-                    console.log(`Hit Str`);
-                    i--;
-                    
-                    let func = modulesInScope['base']['str'];
-                    let funcCallArgs = tokensArray.slice(i + 1, i + 1 + func.argsNeed);
-                    let parsedValue = func.call(funcCallArgs);
-                    console.log("Parsed Value: " + parsedValue.toString());
-                    tokensArray = unify(tokensArray, i, parsedValue, func.argsNeed);
-                    
-                    console.table(variables);
-                }
-                
-                // or its an error
-                else {
-                    // stop parsing
-                    // todo find a way to report for an error
-                    i = -1;
-                }
-                
             }
+            
+            // or its an error
+            else {
+                // stop parsing
+                i = -1;
+                tokensArray[0] = token + ' is not a valid literal'
+            }
+            
             
         }
         

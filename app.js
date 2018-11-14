@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', function () {
     let output = document.getElementById('console');
     
     // tab space
-    let tabSpace = '   ';   // 3
+    let tabSpace = '  ';   // 2
     
     // todo where ot put the cursor in load up
     
@@ -19,6 +19,10 @@ window.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('keydown', function (e) {
         switch (e.key) {
             case 'SoftLeft':
+                if (!editorOnFocus) {
+                    document.getElementById('console').innerHTML = mainOutput = '';
+                    break;
+                }
                 // tab was pressed
                 let start = src.selectionStart;
                 let end = src.selectionEnd;
@@ -31,7 +35,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 
                 output.log('Tab Hit');
                 break;
-            case 'Enter':
+            case 'SoftRight':
                 if (editorOnFocus) {
                     output.focus();
                     editorOnFocus = !editorOnFocus;
@@ -42,13 +46,12 @@ window.addEventListener('DOMContentLoaded', function () {
                 }
                 console.log('Code Compiling Started');
                 
-                mainOutput += interpret(src.value);
-                document.getElementById('console').innerText = mainOutput;
+                mainOutput = interpret(src.value) + '------------------------------------------------------&#010;' + mainOutput;
                 
+                document.getElementById('console').innerHTML = mainOutput;
+                output.selectionStart = output.selectionEnd = 0;
                 console.log('Code Compiling Ended');
                 console.log(mainOutput);
-                
-                
                 
                 break;
         }
