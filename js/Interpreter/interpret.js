@@ -61,13 +61,13 @@ function parse(tokensArray) {
         console.log(`token: ${token}`);
         
         // check if the token is a real number
-        if (typeof token === 'number') {
+        if (!isNaN(token)) {
             
             console.log('Number hit');
             stackHit = true;
             
             tokensArray[i] = Number(token);
-        } else if (typeof token === 'string') {
+        } else if (token[0] === '\'') {
             console.log('String Hit');
             stackHit = true;
             tokensArray[i] = token.toString();
@@ -84,7 +84,7 @@ function parse(tokensArray) {
                     // its a function call
                     let funcCallArgs = tokensArray.slice(i + 1, i + 1 + func.argsNeed);   // func args
                     console.table(funcCallArgs);
-                    let parsedValue = func.call(funcCallArgs);                   // return value after func call
+                    let parsedValue = func.call(funcCallArgs);          // return value after func call
                     console.log("Parsed Value: " + parsedValue.toString());
                     tokensArray = unify(tokensArray, i, parsedValue, func.argsNeed);
                     // carry on
@@ -122,7 +122,7 @@ function parse(tokensArray) {
                 
                 console.log('Variable Hit');
                 stackHit = true;
-                tokensArray[i] = Number(variables[token]);
+                tokensArray[i] = variables[token];
             }
             
             // or its an error
@@ -138,11 +138,12 @@ function parse(tokensArray) {
         console.table(tokensArray);
     }
     
-    return tokensArray[0].toString();
+    return tokensArray[0].toString().replace(/'/g, '');
     
 }
 
 function unify(tokensArray, i, parsedValue, args) {
+    debugger;
     let firstPart = tokensArray.slice(0, i);
     firstPart.push(parsedValue);
     let lastPart = tokensArray.slice(i + 1 + args);

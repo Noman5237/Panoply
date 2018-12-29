@@ -1,6 +1,5 @@
 body {
-    background-color: #221F42;
-    horiz-align: center;
+    background-color: #292D3E;
 }
 
 #editorName, #consoleName {
@@ -10,66 +9,95 @@ body {
     color: whitesmoke;
 }
 
-#srcCode {
-    width: 97%;
-    height: 165px;
-    padding-right: 2px;
-    padding-left: 4px;
+#srcArea {
+    display: inline-block;
+    width: 100%;
+    min-height: 165px;
+    max-height: 165px;
     background-color: inherit;
-    color: papayawhip;
+    overflow: scroll;
+}
+
+#srcCode {
+    display: inline-block;
+    width: inherit;
+    min-height: inherit;
+    padding-left: 4px;
+    padding-right: 0px;
+    background-color: inherit;
+    /*color: papayawhip;*/
+    color: #959DCB;
     border: none;
     font-size: 17px;
     font-weight: 300;
     font-family: Monospaced, monospace;
-
 }
 
 #console {
     width: 97%;
     height: 70px;
     padding-right: 2px;
-    padding-left: 4px;
     background-color: inherit;
     color: lightblue;
     border: none;
     font-size: 14px;
     font-weight: 300;
     font-family: Monospaced, sans-serif;
-
+    cursor: text;
+    flex-shrink: 0;
 }
 
+*:focus {
+    outline: none;
+}
+/*-------------------- Code Highlighting -------------------*/
+
+.string {
+    color: greenyellow;
+}
+
+.variable {
+    color: darkorange;
+}
+
+.standardFunc {
+    color: blueviolet;
+}
+
+/*-------------------- Soft Keys -------------------*/
+
 #softkeys {
-position: fixed;
-bottom: 0;
-left: 0;
-width: 100%;
-height: 25px;
-background: #dadada;
-padding-left: 5px;
-padding-right: 5px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    background: #dadada;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 #softkeys > * {
-display: inline-block;
-width: 72px;
-font-weight: 400;
-color: #323232;
+    display: inline-block;
+    width: 72px;
+    font-weight: 400;
+    color: #323232;
 }
 
 #softkey-left {
-text-align: left;
-font-size: 14px;
+    text-align: left;
+    font-size: 14px;
 }
 
 #softkey-right {
-text-align: right;
-font-size: 14px;
+    text-align: right;
+    font-size: 14px;
 }
 
 #softkey-center {
-width: 76px;
-font-size: 16px;
-font-weight: 600;
-text-align: center;
+    width: 76px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
 }
 

@@ -60,13 +60,13 @@ const str = {
 
 /*-------------------- Function Index -------------------*/
 const base = {
-    
+
     /*-------------------- Basic Math -------------------*/
     'add': add,
     'sub': sub,
     'mul': mul,
     'div': div,
-    
+
     /*-------------------- Basic Utility -------------------*/
     'str': str
 };
