@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', function () {
 let output = document.getElementById('console');
 
 // tab space
-let tabSpace = '&nbsp;&nbsp;'; // 2
+let tabSpace = '  '; // 2
 
 // todo where to put the cursor in load up
 
